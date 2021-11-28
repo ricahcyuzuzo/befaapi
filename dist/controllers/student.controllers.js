@@ -194,6 +194,44 @@ var StudentControllers = /*#__PURE__*/function () {
 
       return getAllOptions;
     }()
+  }, {
+    key: "getAllAnswers",
+    value: function () {
+      var _getAllAnswers = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _db["default"].query('SELECT * FROM answers', function (error, results, fields) {
+                  if (error) throw error;
+
+                  if (!results[0]) {
+                    res.status(404).json({
+                      status: 404,
+                      message: 'No Answers'
+                    });
+                  } else {
+                    res.status(200).json({
+                      status: 200,
+                      data: results
+                    });
+                  }
+                });
+
+              case 1:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function getAllAnswers(_x9, _x10) {
+        return _getAllAnswers.apply(this, arguments);
+      }
+
+      return getAllAnswers;
+    }()
   }]);
 
   return StudentControllers;

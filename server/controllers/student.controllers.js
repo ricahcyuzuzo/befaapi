@@ -104,6 +104,24 @@ class StudentControllers {
             }
         })
     } 
+
+    static async getAllAnswers (req, res){
+        conn.query('SELECT * FROM answers', (error, results, fields) => {
+            if(error) throw error;
+
+            if(!results[0]){
+                res.status(404).json({
+                    status: 404,
+                    message: 'No Answers'
+                })
+            }else{
+                res.status(200).json({
+                    status: 200,
+                    data: results
+                })
+            }
+        })
+    } 
 }
 
 export default StudentControllers;

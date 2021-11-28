@@ -38,7 +38,7 @@ class AuthController {
                 res.status(200).json({
                     message: 'Winjiye neza',
                     status: 200,
-                    userId: results[0].userId
+                    userId: results[0].id
                 });
             }else{
                 res.status(404).json({

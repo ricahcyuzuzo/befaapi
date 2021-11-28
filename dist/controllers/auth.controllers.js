@@ -93,7 +93,8 @@ var AuthController = /*#__PURE__*/function () {
                   if (results[0]) {
                     res.status(200).json({
                       message: 'Winjiye neza',
-                      status: 200
+                      status: 200,
+                      data: results[0].userId
                     });
                   } else {
                     res.status(404).json({

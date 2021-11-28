@@ -15,5 +15,6 @@ var routes = (0, _express["default"])();
 routes.get('/courses', _student["default"].getAllCourses);
 routes.get('/quizes', _student["default"].getAllQuizes);
 routes.get('/questions', _student["default"].getAllQuestions);
+routes.get('/options', _student["default"].getAllOptions);
 var _default = routes;
 exports["default"] = _default;

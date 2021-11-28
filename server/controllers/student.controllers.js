@@ -66,6 +66,44 @@ class StudentControllers {
             }
         })
     }
+
+    static async getAllQuestions (req, res) {
+        const { quizId } = req.query;
+
+        conn.query(`SELECT q.*, a.optionId as answer FROM questions q INNER JOIN answers a ON a.questionId = q.id WHERE q.quiz = '${quizId}'`, (error, results, fields) => {
+            if(error) throw error;
+
+            if(!results[0]){
+                res.status(404).json({
+                    messsage: 'Nta bibazo byabonetse',
+                    status: 404,
+                })
+            }else{
+                res.status(200).json({
+                    data: results,
+                    status: 200,
+                })
+            }
+        })
+    }
+
+    static async getAllOptions (req, res){
+        conn.query('SELECT * FROM options', (error, results, fields) => {
+            if(error) throw error;
+
+            if(!results[0]){
+                res.status(404).json({
+                    status: 404,
+                    message: 'No options'
+                })
+            }else{
+                res.status(200).json({
+                    status: 200,
+                    data: results
+                })
+            }
+        })
+    } 
 }
 
 export default StudentControllers;

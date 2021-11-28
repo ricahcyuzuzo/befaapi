@@ -156,6 +156,44 @@ var StudentControllers = /*#__PURE__*/function () {
 
       return getAllQuestions;
     }()
+  }, {
+    key: "getAllOptions",
+    value: function () {
+      var _getAllOptions = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _db["default"].query('SELECT * FROM options', function (error, results, fields) {
+                  if (error) throw error;
+
+                  if (!results[0]) {
+                    res.status(404).json({
+                      status: 404,
+                      message: 'No options'
+                    });
+                  } else {
+                    res.status(200).json({
+                      status: 200,
+                      data: results
+                    });
+                  }
+                });
+
+              case 1:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function getAllOptions(_x7, _x8) {
+        return _getAllOptions.apply(this, arguments);
+      }
+
+      return getAllOptions;
+    }()
   }]);
 
   return StudentControllers;

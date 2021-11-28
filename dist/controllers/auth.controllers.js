@@ -94,7 +94,7 @@ var AuthController = /*#__PURE__*/function () {
                     res.status(200).json({
                       message: 'Winjiye neza',
                       status: 200,
-                      data: results[0].userId
+                      userId: results[0].userId
                     });
                   } else {
                     res.status(404).json({

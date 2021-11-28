@@ -4,6 +4,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _auth = _interopRequireDefault(require("./routes/auth.routes"));
 
+var _student = _interopRequireDefault(require("./routes/student.routes"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var app = (0, _express["default"])();
@@ -23,6 +25,7 @@ app.use(function (req, res, next) {
   return next();
 });
 app.use('/api', _auth["default"]);
+app.use('/api', _student["default"]);
 app.get("/", function (req, res) {
   res.status(200).json({
     message: "Welcome to amategeko y' umuhanda API."

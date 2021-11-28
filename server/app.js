@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser';
 import express from 'express';
 import authRoutes from './routes/auth.routes';
 import studentRoutes from './routes/student.routes';
@@ -6,7 +7,7 @@ const app = express();
 
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

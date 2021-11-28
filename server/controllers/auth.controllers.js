@@ -39,6 +39,10 @@ class AuthController {
                     message: 'Winjiye neza',
                     status: 200,
                 });
+            }else{
+                res.status(404).json({
+                    message: 'Injiza amakuru y\'ibanga nyayo'
+                })
             }
         })
     }

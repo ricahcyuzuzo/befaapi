@@ -1,5 +1,6 @@
 import express from 'express';
 import authRoutes from './routes/auth.routes';
+import studentRoutes from './routes/student.routes';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api', authRoutes);
+app.use('/api', studentRoutes);
 
 app.get("/", (req, res) => {
     res.status(200).json({ 

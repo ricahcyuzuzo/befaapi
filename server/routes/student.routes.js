@@ -8,5 +8,6 @@ routes.get('/quizes', StudentControllers.getAllQuizes);
 routes.get('/questions', StudentControllers.getAllQuestions);
 routes.get('/options', StudentControllers.getAllOptions);
 routes.get('/answers', StudentControllers.getAllAnswers);
+routes.post('/pay', StudentControllers.pay);
 
 export default routes;

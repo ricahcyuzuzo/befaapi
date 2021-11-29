@@ -5,7 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _axios = _interopRequireDefault(require("axios"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
 var _db = _interopRequireDefault(require("../config/db"));
+
+var _genUid = _interopRequireDefault(require("gen-uid"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -231,6 +237,84 @@ var StudentControllers = /*#__PURE__*/function () {
       }
 
       return getAllAnswers;
+    }()
+  }, {
+    key: "pay",
+    value: function () {
+      var _pay = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+        var phone, userId;
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                phone = req.body.phone;
+                userId = req.query.userId;
+
+                _db["default"].query("SELECT * FROM users WHERE id='".concat(userId, "'"), function (error, result, field) {
+                  var names = result[0].names;
+
+                  _db["default"].query('SELECT * FROM packages', function (error, results, fields) {
+                    if (error) throw error;
+                    var amount = results[0].amount;
+                    var currency = results[0].currency;
+                    var period = results[0].period;
+                    var description = "Murakoze ".concat(names, ", Ifatabuguzi ").concat(amount, " ").concat(currency, " rizarangira ").concat(period, ".");
+                    var randomId = Math.floor(Math.random() * 1000000000);
+                    var d = new Date();
+                    var year = d.getFullYear();
+                    var transactionId = "BEFA-".concat(year, "-").concat(randomId);
+                    var post = {
+                      GUID: _genUid["default"].v4(),
+                      student: userId,
+                      transactionID: transactionId,
+                      description: description,
+                      telephone: phone,
+                      paidAmount: amount,
+                      transactionStatus: 'INITIAL',
+                      expiryDate: period,
+                      createAt: new Date(),
+                      updatedAt: new Date()
+                    };
+
+                    _db["default"].query('INSERT INTO payments SET ?', post, function (error, resu, fiel) {
+                      if (error) throw error;
+
+                      _axios["default"].post('https://opay-api.oltranz.com/opay/paymentrequest', {
+                        "telephoneNumber": "25".concat(phone),
+                        "amount": amount,
+                        "organizationId": "f60681b7-f09e-47fd-9a6c-7d1b1b758b09",
+                        "description": description,
+                        "callbackUrl": "https://www.amategekoyumuhanda.rw/callback.php",
+                        "transactionId": transactionId
+                      }).then(function (response) {
+                        _db["default"].query("UPDATE payments SET statusMessage = '".concat(response.data.description, "', transactionID = '").concat(transactionId, "', walletTransactionID = '").concat(transactionId, "', transactionStatus = '").concat(response.data.status, "', transactionStatusCode = '").concat(response.data.code, "' WHERE transactionID = '").concat(transactionId, "'"), function (err, re, fi) {
+                          if (err) throw err;
+                          res.status(response.data.code).json({
+                            code: response.data.code,
+                            message: response.data.description,
+                            status: response.data.status
+                          });
+                        });
+                      })["catch"](function (err) {
+                        return console.log(err);
+                      });
+                    });
+                  });
+                });
+
+              case 3:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function pay(_x11, _x12) {
+        return _pay.apply(this, arguments);
+      }
+
+      return pay;
     }()
   }]);
 

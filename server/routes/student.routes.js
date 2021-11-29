@@ -9,6 +9,6 @@ routes.get('/questions', StudentControllers.getAllQuestions);
 routes.get('/options', StudentControllers.getAllOptions);
 routes.get('/answers', StudentControllers.getAllAnswers);
 routes.post('/pay', StudentControllers.pay);
-routes.post('/check', StudentControllers.checkPayment);
+routes.get('/check', StudentControllers.checkPayment);
 
 export default routes;

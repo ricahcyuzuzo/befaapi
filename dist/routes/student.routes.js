@@ -18,5 +18,6 @@ routes.get('/questions', _student["default"].getAllQuestions);
 routes.get('/options', _student["default"].getAllOptions);
 routes.get('/answers', _student["default"].getAllAnswers);
 routes.post('/pay', _student["default"].pay);
+routes.post('/check', _student["default"].checkPayment);
 var _default = routes;
 exports["default"] = _default;

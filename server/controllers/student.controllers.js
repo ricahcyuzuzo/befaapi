@@ -186,6 +186,24 @@ class StudentControllers {
     
         });
     }
+
+    static async checkPayment (req, res) {
+        const { userId } = req.query;
+        conn.query(`SELECT * FROM payments WHERE student = '${userId}' AND transactionStatus = 'SUCCESS'`, (error, results, fields) => {
+            if (error) throw error;
+            if(!results[0]){
+                res.status(404).json({
+                    message: "Ntabwo mwari wishyura, rangiza kwishyura.",
+                    status: 404
+                });
+            }else{
+                res.status(200).json({
+                    message: 'Mwishyuye neza, murakoze gukoresha Befa App',
+                    status: 200
+                })
+            }
+        })
+    } 
 }
 
 export default StudentControllers;

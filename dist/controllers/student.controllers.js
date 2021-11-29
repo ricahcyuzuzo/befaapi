@@ -316,6 +316,47 @@ var StudentControllers = /*#__PURE__*/function () {
 
       return pay;
     }()
+  }, {
+    key: "checkPayment",
+    value: function () {
+      var _checkPayment = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
+        var userId;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                userId = req.query.userId;
+
+                _db["default"].query("SELECT * FROM payments WHERE student = '".concat(userId, "' AND transactionStatus = 'SUCCESS'"), function (error, results, fields) {
+                  if (error) throw error;
+
+                  if (!results[0]) {
+                    res.status(404).json({
+                      message: "Ntabwo mwari wishyura, rangiza kwishyura.",
+                      status: 404
+                    });
+                  } else {
+                    res.status(200).json({
+                      message: 'Mwishyuye neza, murakoze gukoresha Befa App',
+                      status: 200
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function checkPayment(_x13, _x14) {
+        return _checkPayment.apply(this, arguments);
+      }
+
+      return checkPayment;
+    }()
   }]);
 
   return StudentControllers;

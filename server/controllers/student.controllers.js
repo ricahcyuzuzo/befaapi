@@ -87,7 +87,7 @@ class StudentControllers {
                     status: 200,
                 })
             }
-        })
+        });
     }
 
     static async getAllOptions (req, res){
@@ -125,6 +125,10 @@ class StudentControllers {
             }
         })
     } 
+    
+    static async callBack (req, res) {
+        const {  } = req.body;
+    }
 
     static async pay (req, res) {
         const { phone } = req.body;
@@ -169,7 +173,7 @@ class StudentControllers {
                         "transactionId" : transactionId
                     })
                     .then((response) => {
-                        conn.query(`UPDATE payments SET statusMessage = '${response.data.description}', transactionID = '${transactionId}', walletTransactionID = '${transactionId}', transactionStatus = '${response.data.status}', transactionStatusCode = '${response.data.code}' WHERE transactionID = '${transactionId}'`, (err, re, fi) => {
+                        conn.query(`UPDATE payments SET statusMessage = '${response.data.description}', transactionID = '${response.data.body.transactionId}', walletTransactionID = '${response.data.body.transactionId}', transactionStatus = '${response.data.status}', transactionStatusCode = '${response.data.code}' WHERE transactionID = '${transactionId}'`, (err, re, fi) => {
                             if(err) throw err;
                             res.status(response.data.code).json({
                                 code: response.data.code,

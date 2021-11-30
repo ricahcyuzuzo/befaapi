@@ -15,6 +15,8 @@ var _genUid = _interopRequireDefault(require("gen-uid"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -239,13 +241,37 @@ var StudentControllers = /*#__PURE__*/function () {
       return getAllAnswers;
     }()
   }, {
-    key: "pay",
+    key: "callBack",
     value: function () {
-      var _pay = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
-        var phone, userId;
+      var _callBack = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
         return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
+              case 0:
+                _objectDestructuringEmpty(req.body);
+
+              case 1:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function callBack(_x11, _x12) {
+        return _callBack.apply(this, arguments);
+      }
+
+      return callBack;
+    }()
+  }, {
+    key: "pay",
+    value: function () {
+      var _pay = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
+        var phone, userId;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 phone = req.body.phone;
                 userId = req.query.userId;
@@ -287,7 +313,7 @@ var StudentControllers = /*#__PURE__*/function () {
                         "callbackUrl": "https://www.amategekoyumuhanda.rw/callback.php",
                         "transactionId": transactionId
                       }).then(function (response) {
-                        _db["default"].query("UPDATE payments SET statusMessage = '".concat(response.data.description, "', transactionID = '").concat(transactionId, "', walletTransactionID = '").concat(transactionId, "', transactionStatus = '").concat(response.data.status, "', transactionStatusCode = '").concat(response.data.code, "' WHERE transactionID = '").concat(transactionId, "'"), function (err, re, fi) {
+                        _db["default"].query("UPDATE payments SET statusMessage = '".concat(response.data.description, "', transactionID = '").concat(response.data.body.transactionId, "', walletTransactionID = '").concat(response.data.body.transactionId, "', transactionStatus = '").concat(response.data.status, "', transactionStatusCode = '").concat(response.data.code, "' WHERE transactionID = '").concat(transactionId, "'"), function (err, re, fi) {
                           if (err) throw err;
                           res.status(response.data.code).json({
                             code: response.data.code,
@@ -304,13 +330,13 @@ var StudentControllers = /*#__PURE__*/function () {
 
               case 3:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6);
+        }, _callee7);
       }));
 
-      function pay(_x11, _x12) {
+      function pay(_x13, _x14) {
         return _pay.apply(this, arguments);
       }
 
@@ -319,11 +345,11 @@ var StudentControllers = /*#__PURE__*/function () {
   }, {
     key: "checkPayment",
     value: function () {
-      var _checkPayment = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
+      var _checkPayment = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(req, res) {
         var userId;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 userId = req.query.userId;
 
@@ -345,13 +371,13 @@ var StudentControllers = /*#__PURE__*/function () {
 
               case 2:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7);
+        }, _callee8);
       }));
 
-      function checkPayment(_x13, _x14) {
+      function checkPayment(_x15, _x16) {
         return _checkPayment.apply(this, arguments);
       }
 

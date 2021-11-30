@@ -19,5 +19,7 @@ routes.get('/options', _student["default"].getAllOptions);
 routes.get('/answers', _student["default"].getAllAnswers);
 routes.post('/pay', _student["default"].pay);
 routes.get('/check', _student["default"].checkPayment);
+routes.post('/marks', _student["default"].addMarks);
+routes.get('/marks', _student["default"].getMarks);
 var _default = routes;
 exports["default"] = _default;

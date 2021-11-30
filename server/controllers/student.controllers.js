@@ -126,9 +126,6 @@ class StudentControllers {
         })
     } 
     
-    static async callBack (req, res) {
-        const {  } = req.body;
-    }
 
     static async pay (req, res) {
         const { phone } = req.body;
@@ -207,7 +204,49 @@ class StudentControllers {
                 })
             }
         })
-    } 
+    }
+    
+    static async addMarks (req, res) {
+        const { student, quizId, score, level, correctAnswer, wrongAnswer} = req.body;
+
+        const post = {
+            student: student,
+            quiz: quizId,
+            score: score,
+            level: level,
+            correctAnswer: correctAnswer,
+            wrongAnswer: wrongAnswer,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+
+        conn.query(`INSERT INTO marks SET ?`,post, (error, results, fields) => {
+            if(error) throw error;
+            res.status(201).json({
+                status: 201,
+                message: 'Amanota yabitswe neza',
+            });
+        })
+    }
+
+    static async getMarks (req, res) {
+        const { userId } = req.query;
+
+        conn.query(`SELECT * FROM marks WHERE student = '${userId}'`, (error, results, fields) => {
+            if(error) throw error;
+            if(!results[0]){
+                res.status(404).json({
+                    status: 404,
+                    message: 'Ntabwo wari wakora isuzuma bumenyi'
+                })
+            }else{
+                res.status(200).json({
+                    status: 200,
+                    data: results,
+                })
+            }
+        })
+    }
 }
 
 export default StudentControllers;

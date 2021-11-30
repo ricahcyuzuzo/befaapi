@@ -15,8 +15,6 @@ var _genUid = _interopRequireDefault(require("gen-uid"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -241,37 +239,13 @@ var StudentControllers = /*#__PURE__*/function () {
       return getAllAnswers;
     }()
   }, {
-    key: "callBack",
+    key: "pay",
     value: function () {
-      var _callBack = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+      var _pay = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+        var phone, userId;
         return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
-              case 0:
-                _objectDestructuringEmpty(req.body);
-
-              case 1:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }));
-
-      function callBack(_x11, _x12) {
-        return _callBack.apply(this, arguments);
-      }
-
-      return callBack;
-    }()
-  }, {
-    key: "pay",
-    value: function () {
-      var _pay = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
-        var phone, userId;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
               case 0:
                 phone = req.body.phone;
                 userId = req.query.userId;
@@ -330,13 +304,13 @@ var StudentControllers = /*#__PURE__*/function () {
 
               case 3:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7);
+        }, _callee6);
       }));
 
-      function pay(_x13, _x14) {
+      function pay(_x11, _x12) {
         return _pay.apply(this, arguments);
       }
 
@@ -345,11 +319,11 @@ var StudentControllers = /*#__PURE__*/function () {
   }, {
     key: "checkPayment",
     value: function () {
-      var _checkPayment = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(req, res) {
+      var _checkPayment = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
         var userId;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 userId = req.query.userId;
 
@@ -371,17 +345,102 @@ var StudentControllers = /*#__PURE__*/function () {
 
               case 2:
               case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function checkPayment(_x13, _x14) {
+        return _checkPayment.apply(this, arguments);
+      }
+
+      return checkPayment;
+    }()
+  }, {
+    key: "addMarks",
+    value: function () {
+      var _addMarks = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(req, res) {
+        var _req$body, student, quizId, score, level, correctAnswer, wrongAnswer, post;
+
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _req$body = req.body, student = _req$body.student, quizId = _req$body.quizId, score = _req$body.score, level = _req$body.level, correctAnswer = _req$body.correctAnswer, wrongAnswer = _req$body.wrongAnswer;
+                post = {
+                  student: student,
+                  quiz: quizId,
+                  score: score,
+                  level: level,
+                  correctAnswer: correctAnswer,
+                  wrongAnswer: wrongAnswer,
+                  createdAt: new Date(),
+                  updatedAt: new Date()
+                };
+
+                _db["default"].query("INSERT INTO marks SET ?", post, function (error, results, fields) {
+                  if (error) throw error;
+                  res.status(201).json({
+                    status: 201,
+                    message: 'Amanota yabitswe neza'
+                  });
+                });
+
+              case 3:
+              case "end":
                 return _context8.stop();
             }
           }
         }, _callee8);
       }));
 
-      function checkPayment(_x15, _x16) {
-        return _checkPayment.apply(this, arguments);
+      function addMarks(_x15, _x16) {
+        return _addMarks.apply(this, arguments);
       }
 
-      return checkPayment;
+      return addMarks;
+    }()
+  }, {
+    key: "getMarks",
+    value: function () {
+      var _getMarks = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(req, res) {
+        var userId;
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                userId = req.query.userId;
+
+                _db["default"].query("SELECT * FROM marks WHERE student = '".concat(userId, "'"), function (error, results, fields) {
+                  if (error) throw error;
+
+                  if (!results[0]) {
+                    res.status(404).json({
+                      status: 404,
+                      message: 'Ntabwo wari wakora isuzuma bumenyi'
+                    });
+                  } else {
+                    res.status(200).json({
+                      status: 200,
+                      data: results
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      function getMarks(_x17, _x18) {
+        return _getMarks.apply(this, arguments);
+      }
+
+      return getMarks;
     }()
   }]);
 

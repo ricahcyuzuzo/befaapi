@@ -9,7 +9,7 @@ class StudentControllers {
         conn.query(`SELECT * FROM payments WHERE student = '${userId}' AND transactionStatus = 'SUCCESS'`, (error, results, fields) => {
             if(error) throw error;
             if(!results[0]){
-                conn.query(`SELECT id, GUID, instructor, title, summary, video, createdAt, updatedAt FROM courses LIMIT 3`, (err, result, field) => {
+                conn.query(`SELECT id, GUID, instructor, title, summary, video, createdAt, updatedAt FROM courses LIMIT 2`, (err, result, field) => {
                     if(err) throw err;
                     res.status(200).json({
                         data: result,

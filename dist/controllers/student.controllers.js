@@ -45,7 +45,7 @@ var StudentControllers = /*#__PURE__*/function () {
                   if (error) throw error;
 
                   if (!results[0]) {
-                    _db["default"].query("SELECT id, GUID, instructor, title, summary, video, createdAt, updatedAt FROM courses LIMIT 3", function (err, result, field) {
+                    _db["default"].query("SELECT id, GUID, instructor, title, summary, video, createdAt, updatedAt FROM courses LIMIT 2", function (err, result, field) {
                       if (err) throw err;
                       res.status(200).json({
                         data: result,

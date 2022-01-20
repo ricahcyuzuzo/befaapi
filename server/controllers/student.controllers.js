@@ -29,25 +29,14 @@ class StudentControllers {
     }
 
     static async getAllQuizes (req, res) {
-        const { userId } = req.query;
-
-        conn.query(`SELECT * FROM payments WHERE student = '${userId}' AND transactionStatus = 'SUCCESS'`, (error, results, fields) => {
-            if(error) throw error;
-            if(!results[0]){
-                res.status(404).json({
-                    message: "Ntasomo ribonetse",
-                    status: 404
-                });
-            }else{
-                conn.query('SELECT * FROM quiz', (err, result, field) => {
-                    if(err) throw err;
-                    res.status(200).json({
-                        data: result,
-                        status: 200
-                    })
+            const { userId } = req.query;
+            conn.query('SELECT * FROM quiz', (err, result, field) => {
+                if(err) throw err;
+                res.status(200).json({
+                   data: result,
+                   status: 200
                 })
-            }
-        })
+            })
     }
 
     static async getAllQuestions (req, res) {

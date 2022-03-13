@@ -148,7 +148,7 @@ class StudentControllers {
 
                 conn.query('INSERT INTO payments SET ?', post, (error, resu, fiel) => {
                     if(error) throw error;
-
+                    console.log(resu);
                     axios.post('https://opay-api.oltranz.com/opay/paymentrequest', 
                     {
                         "telephoneNumber" : `25${phone}`,
@@ -159,13 +159,8 @@ class StudentControllers {
                         "transactionId" : transactionId
                     })
                     .then((response) => {
-                        if(response.data.code = '401'){
-                            res.status(response.data.code).json({
-                                code: response.data.code,
-                                message: response.data.description,
-                                status: response.data.status
-                            });
-                        }else if(response.data.code = '200'){
+                        console.log(response);
+                        if(response.data.code === '200'){
                             conn.query(`UPDATE payments SET statusMessage = '${response.data.description}', transactionID = '${response.data.body.transactionId}', walletTransactionID = '${response.data.body.transactionId}', transactionStatus = '${response.data.status}', transactionStatusCode = '${response.data.code}' WHERE transactionID = '${transactionId}'`, (err, re, fi) => {
                                 if(err) throw err;
                                 res.status(response.data.code).json({
@@ -173,6 +168,10 @@ class StudentControllers {
                                     message: response.data.description,
                                     status: response.data.status
                                 });  
+                            })
+                        }else{
+                            res.json({
+                                error: 'Error occured',
                             })
                         }
                     })
